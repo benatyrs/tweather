@@ -1,0 +1,13 @@
+<?php
+define("oauth_access_token","");
+define("oauth_access_token_secret", "");
+define("oauth_consumer_key", "");
+define("oauth_consumer_secret", "");
+define("api_google", "");
+
+define("MYSQL_SERVER", "localhost");
+define("MYSQL_USER", "");
+define("MYSQL_PASS", "");
+define("MYSQL_DB", "");
+
+define("SECRET_KEY", "");

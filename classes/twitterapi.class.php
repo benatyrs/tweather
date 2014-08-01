@@ -48,6 +48,12 @@ class twitter {
                 $q[$Key2]['user']['location'] = $r[$Key2]['user']['location'];
                 $q[$Key2]['user']['screen_name'] = $r[$Key2]['user']['screen_name'];
                 $q[$Key2]['type'] = $Val;
+                if ((stripos($r[$Key2]['text'], "mm") !== false || stripos($r[$Key2]['text'], "Pres") !== false)
+                    && (stripos($r[$Key2]['text'], "mph") !== false || stripos($r[$Key2]['text'], "kmph") !== false || stripos($r[$Key2]['text'], "m/h") !== false || stripos($r[$Key2]['text'], "km/h") !== false)
+                    && (stripos($r[$Key2]['text'], "°C") !== false || stripos($r[$Key2]['text'], "%") !== false)) {
+                    $q[$Key2]['type'] = "Report";
+
+                }
                 $r[$Key2] = $q[$Key2];
                 if (stripos($r[$Key2]['text'], $Val) !== false) {
                     $Continue = true;

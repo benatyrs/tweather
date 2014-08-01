@@ -21,6 +21,9 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
 <head>
     <title>Tweather: Weather around the UK as shown by Tweets</title>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="icon"
+          type="image/png"
+          href="http://localhost:8080/favicon.ico">
     <style type="text/css">
         body, html {
             height: 100%;
@@ -37,7 +40,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
             position: absolute;
             left: 0;
             top: 0;
-            overflow:hidden;
+            overflow: hidden;
             width: 100%;
             height: 100%;
             z-index: 0;
@@ -46,7 +49,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
             width: 100%;
             height: 100%;
         }
-        #banner {
+        #banner  {
             width: 100%;
             height: 40px;
             background-color: #382E24;
@@ -54,14 +57,17 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
             background: -moz-linear-gradient(bottom, #000000 0%, #382E24 100%);
             background: -webkit-linear-gradient(bottom, #000000 0%, #382E24 100%);
             background: -ms-linear-gradient(bottom, #000000 0%, #382E24 100%);
+            overflow: hidden;
+            white-space: nowrap;
         }
         #logo {
             background: url('static/logo2.png') top center no-repeat;
             z-index: 10;
-            display: block;
+            display: inline-block;
             width: 187px;
             height: 50px;
             padding: 4px 0 4px 4px;
+            float: left;
         }
         #overflow-wrap {
             overflow: hidden;
@@ -139,6 +145,78 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
         a:hover {
             text-decoration: underline;
         }
+        .infobutton {
+            -moz-box-shadow:inset 0 1px 0 0 #f29c93;
+            -webkit-box-shadow:inset 0 1px 0 0 #f29c93;
+            box-shadow:inset 0 1px 0 0 #f29c93;
+            background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100) );
+            background:-moz-linear-gradient( center top, #fe1a00 5%, #ce0100 100% );
+            filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100');
+            background-color:#fe1a00;
+            -webkit-border-top-left-radius:20px;
+            -moz-border-radius-topleft:20px;
+            border-top-left-radius:20px;
+            -webkit-border-top-right-radius:20px;
+            -moz-border-radius-topright:20px;
+            border-top-right-radius:20px;
+            -webkit-border-bottom-right-radius:20px;
+            -moz-border-radius-bottomright:20px;
+            border-bottom-right-radius:20px;
+            -webkit-border-bottom-left-radius:20px;
+            -moz-border-radius-bottomleft:20px;
+            border-bottom-left-radius:20px;
+            text-indent:0;
+            border:1px solid #d83526;
+            display:inline-block;
+            color:#ffffff;
+            font-family: Arial, sans-serif;
+            font-size:15px;
+            font-weight:bold;
+            font-style:normal;
+            height:25px;
+            line-height:25px;
+            width:86px;
+            text-decoration:none;
+            text-align:center;
+            text-shadow:1px 1px 0 #b23e35;
+            z-index:10;
+            float:right;
+            margin: 6px 6px 0 0;
+
+        }
+        .infobutton:hover {
+            background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00) );
+            background:-moz-linear-gradient( center top, #ce0100 5%, #fe1a00 100% );
+        }
+        #popup {
+            background: url("static/back.png") repeat-x scroll 0 bottom #FFFFFF;
+            border: 1px solid #D1CED3;
+            height: 270px;
+            width: 500px;
+            font-family: "Proxima Nova Regular","Segoe UI",Roboto,"Droid Sans","Helvetica Neue",Arial,sans-serif;
+            border-radius: 10px;
+            box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top:-135px;
+            margin-left: -250px;
+            z-index: 1000000;
+            display: none;
+            padding: 10px 20px 20px 20px;
+        }
+        .coin_container {
+            margin-right: 7px;
+            color: #333333;
+            font-weight: bold;
+            text-shadow: 0 -1px 0 #FFFFFF;
+            font-size:12px;
+        }
+        .small {
+            font-size:8px;
+            color:#666666;
+        }
+
     </style>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCXeAK5uQJTdg8XWnzoaqITj4GEbFWaWOk">
     </script>
@@ -170,7 +248,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
             infowindow = new google.maps.InfoWindow();
             var mapOptions = {
                 center: new google.maps.LatLng(54.559322, -4.174804),
-                zoom: 5
+                zoom: 6
             };
             map = new google.maps.Map(document.getElementById("map-canvas"),
                 mapOptions);
@@ -180,14 +258,29 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
 </head>
 <body>
 <div id="main">
-    <div id="banner"><div id="logo"></div></div>
+    <div id="popup"><img src="static/logo3.png" /><a href="#"><img src="static/close-button.png" width="40" height="40" style="float: right; cursor: pointer;" id="closebutton" onclick="$(function() {$('#popup').fadeOut(400)});"/></a> <br />
+        Tweather is an experiment. We find tweets about the weather in the UK, find the location they were tweeted from and place them on a map - we'll leave it up to you to identify trends.<br />
+
+        <br />
+        Open data used: <a href="http://boundingbox.klokantech.com">klokantech.com</a>, <a href="http://www.ordnancesurvey.co.uk/opendata/">ordnancesurvey.co.uk</a>
+        <br />
+        Map Icons: <a href="http://mapicons.nicolasmollet.com/category/markers/nature/weather/">nicolasmollet.com</a><br />
+        <br /><div align="center"><a href="https://twitter.com/the_tweatherapp" class="twitter-follow-button" data-show-count="false" data-dnt="true">Follow @the_tweatherapp</a>
+
+        <iframe src="http://ghbtns.com/github-btn.html?user=benatyrs&type=follow&count=true" allowtransparency="true" frameborder="0" scrolling="0" width="165" height="20"></iframe>
+<br />
+        <span class="coin_container"><img src="static/icon_bitcoin.png" style="vertical-align: middle;" />&nbsp;<span>1NsVruxNxeYawYJiXBWPUBo5mPkFe1CJKG</span><br />
+        <span class="small"> YRS 2014. Contact: benedictyrs at gmail dot com </div>
+
+
+        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
+    <div id="banner"><div><span id="logo"></span><a href="#" class="infobutton" onclick="$(function() {$('#popup').fadeIn(400)});">About</a></div></div>
     <div id="overflow-wrap">
     <div id="wrap"><div id="googlemap"><div id="map-canvas"></div> </div></div>
     <div id="sidebar">
     </div>
     </div>
     <div id="footer"><div class="pi"><span id="status">Waiting... if this persists, enable JavaScript or update your browser.</span> | <span id="debug" onmouseout="$(this).text('&pi;');">&pi;</span></div></div>
-    <!-- TODO: http://mapicons.nicolasmollet.com/category/markers/nature/weather/?style=default credits (CC 3 License) -->
 </div>
 <script language="javascript">
         $(document).ready(function () {
@@ -197,9 +290,15 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
         var marker = [];
         var currentAdded = [];
         var thiscycle = 0;
+        var first = "0";
 
         var update = function () {
             $('#status').text("Updating...");
+
+            if(first == 0) {
+                setTimeout(update, 5000);
+                first = 1;
+            }
 
             $.ajax({
                 url: 'api.php?API_KEY=<?=$APIKey?>&debug=true',
@@ -229,7 +328,9 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
                 }
                 else {
                     parseJson(data);
-                    setTimeout(update, 5000);
+                    if(first == 1) {
+                        setTimeout(update, 5000);
+                    }
                 }
             });
         };

@@ -23,7 +23,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="icon"
           type="image/png"
-          href="http://localhost:8080/favicon.ico">
+          href="http://twitterweather.com/favicon.png">
     <style type="text/css">
         body, html {
             height: 100%;

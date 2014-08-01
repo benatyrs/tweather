@@ -261,7 +261,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
 </head>
 <body>
 <div id="main">
-    <div id="popup"><img src="static/logo3.png" /><a href="#"><img src="static/close-button.png" width="40" height="40" style="float: right; cursor: pointer;" id="closebutton" onclick="$(function() {$('#popup').fadeOut(400)});"/></a> <br />
+    <div id="popup"><img src="static/logo3.png" /><a href=""><img src="static/close-button.png" width="40" height="40" style="float: right; cursor: pointer;" id="closebutton" onclick="$(function() {$('#popup').fadeOut(400)});"/></a> <br />
         Tweather is an experiment. We find tweets about the weather in the UK, find the location they were tweeted from and place them on a map - we'll leave it up to you to identify trends.<br />
 
         <br />
@@ -277,7 +277,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
 
 
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
-    <div id="banner"><div><span id="logo"></span><a href="#" class="infobutton" onclick="$(function() {$('#popup').fadeIn(400)});">About</a></div></div>
+    <div id="banner"><div><span id="logo"></span><a href="" class="infobutton" onclick="$(function() {$('#popup').fadeIn(400)});">About</a></div></div>
     <div id="overflow-wrap">
     <div id="wrap"><div id="googlemap"><div id="map-canvas"></div> </div></div>
     <div id="sidebar">

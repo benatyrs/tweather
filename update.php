@@ -2,7 +2,6 @@
 require("classes/config.php");
 require("classes/twitterapi.class.php");
 require("classes/json.class.php");
-require("classes/datahandle.class.php");
 require("classes/mysql.class.php");
 require("classes/g.class.php");
 

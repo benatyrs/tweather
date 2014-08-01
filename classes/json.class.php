@@ -214,8 +214,8 @@ class json {
         // peak memory usage
 
         $All = implode(",", array($a, $b, $c, $d, $e, $f, $g, $h, $i, $j));
-        G::$DB->query("INSERT INTO process_debug (id, text, time)
-                     VALUES (NULL, '" . $All . "', '" . time() . "')
+        G::$DB->query("INSERT INTO process_debug (text, time)
+                     VALUES ('" . $All . "', '" . time() . "')
         ");
 
     }

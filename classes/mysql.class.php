@@ -38,9 +38,8 @@ class mysqldb {
         self::$Time += ($QueryEndTime - $QueryStartTime) * 1000;
 
         if (!$Query) {
-            $Errno = mysqli_connect_errno();
-            $Error = mysqli_connect_error();
-            exit("Query failed - $Errno - $Error");
+            $Error = mysqli_error($this->LinkID);
+            exit("Query failed - $Error");
         }
 
         mysqli_close($this->LinkID);
@@ -57,8 +56,8 @@ class mysqldb {
         $Res = $this->query("SELECT tweet_id FROM tweets WHERE tweet_id = '". $DataID ."';");
 
         if (empty(mysqli_fetch_array($Res))) {
-            $this->query("INSERT INTO tweets (id, tweet_id, json_data)
-                     VALUES (NULL, " . $DataID . ", '$Encoded')");
+            $this->query("INSERT INTO tweets (tweet_id, json_data)
+                     VALUES (" . $DataID . ", '$Encoded')");
             return 1;
         }
         else {

@@ -14,7 +14,6 @@ $Settings = array(
 
 $Twitter = new twitter;
 $JSON = new json;
-$Filter = new data;
 $DB = new mysqldb;
 
 G::init();

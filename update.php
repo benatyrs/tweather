@@ -4,6 +4,7 @@ require("classes/twitterapi.class.php");
 require("classes/json.class.php");
 require("classes/mysql.class.php");
 require("classes/g.class.php");
+set_time_limit(30);
 
 $Settings = array(
     'oauth_access_token' => oauth_access_token,

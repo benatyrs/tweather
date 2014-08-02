@@ -399,15 +399,15 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
         };
         var addSideTweet = function (data) {
             // Swear Filter (for live demo)
-            data['json_data']['text'] = data['json_data']['text'].replace(/fuck/g, "****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/shit/g, "****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/cunt/g, "****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/fag/g, "***");
-            data['json_data']['text'] = data['json_data']['text'].replace(/bitch/g, "*****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/cock/g, "****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/bastard/g, "*******");
-            data['json_data']['text'] = data['json_data']['text'].replace(/slut/g, "****");
-            data['json_data']['text'] = data['json_data']['text'].replace(/porn/g, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/fuck/gi, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/shit/gi, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/cunt/gi, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/fag/gi, "***");
+            data['json_data']['text'] = data['json_data']['text'].replace(/bitch/gi, "*****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/cock/gi, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/bastard/gi, "*******");
+            data['json_data']['text'] = data['json_data']['text'].replace(/slut/gi, "****");
+            data['json_data']['text'] = data['json_data']['text'].replace(/porn/gi, "****");
 
             var tweet = "<div class=\"Tweet\" id=\"tweet_" + data['id'] + "\"><img alt=\"\" src=\"" + data['json_data']['user']['profile_image_url'].stripSlashes() + "\" class=\"Tweet-avatar\"><div class=\"Tweet-authorDetails\"><b class=\"Tweet-fullname\">" + data['json_data']['user']['name'].stripSlashes() + "</b> <span class=\"Tweet-screenname\"><a href=\"http://twitter.com/" + data['json_data']['user']['screen_name'] + "\">@" + data['json_data']['user']['screen_name'].stripSlashes() + "</a></span> <span class=\"Tweet-timestamp\">" + data['json_data']['ago'].stripSlashes() + "</span></div>" + data['json_data']['text'].stripSlashes() + "</div>";
             $("#sidebar").prepend(

@@ -294,6 +294,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
         var currentAdded = [];
         var thiscycle = 0;
         var first = "0";
+        var allmap = [];
 
         var update = function () {
             $('#status').text("Updating...");
@@ -352,6 +353,18 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
                 }
                 $('#status').text("Updated.");
             })
+            addHideHovers();
+        };
+        var addHideHovers = function () {
+            $.each(allmap, function (key, value) {
+                google.maps.event.addListener(marker[value], 'mouseover', function () {
+                    $.each(allmap, function (key2, value2) {
+                        if (value2 !== value) {
+                            infowindow[value2].close();
+                        }
+                    });
+                });
+            });
         };
         var updateDebug = function (data) {
             $('#debug').mouseover(function() {
@@ -371,6 +384,7 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
         };
         var addMarkerWindow = function (data) {
             var name = data['id'];
+
             infowindow[name] = new google.maps.InfoWindow();
             google.maps.event.addListener(marker[name], 'mouseover', function () {
                 infowindow[name].setContent("<p>Tweet by <strong>@<a href=\"http://twitter.com/" + data['json_data']['user']['screen_name'] + "\">" + data['json_data']['user']['screen_name'] + "</a>:</strong> <i>" + data['json_data']['text'] + "</i></p>");
@@ -380,6 +394,8 @@ $APIKey = md5($_SERVER['REMOTE_ADDR'] . $_SESSION['rand_key'] . SECRET_KEY); // 
             google.maps.event.addListener(map, 'mousemove', function () {
                 infowindow[name].close();
             });
+
+            allmap.push(data['id']);
         };
         var addSideTweet = function (data) {
             // Swear Filter (for live demo)
